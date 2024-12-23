@@ -6,7 +6,8 @@ Repositorio del proyecto del curso sobre TanStack Query con React
 
 1. Clonar repositorio
 2. Instalar dependencias `npm install`
-3. Iniciar servidor de desarrollo `npm run dev`
+3. Copiar archivo `.env.template` a `.env` y agregar las variables de entorno
+4. Iniciar servidor de desarrollo `npm run dev`
 
 ## Tecnologías usadas
 
