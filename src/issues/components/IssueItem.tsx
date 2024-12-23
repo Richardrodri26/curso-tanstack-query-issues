@@ -1,11 +1,11 @@
-import { FiInfo, FiMessageSquare, FiCheckCircle } from 'react-icons/fi';
+import { FiInfo, FiMessageSquare } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 export const IssueItem = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center px-2 py-3 mb-5 border rounded-md bg-slate-900 hover:bg-slate-800">
+    <div className="animate-fadeIn flex items-center px-2 py-3 mb-5 border rounded-md bg-slate-900 hover:bg-slate-800">
       <FiInfo size={30} color="red" className="min-w-10" />
       {/* <FiCheckCircle size={30} color="green" /> */}
 
