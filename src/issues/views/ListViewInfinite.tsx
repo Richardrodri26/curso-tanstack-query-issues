@@ -2,20 +2,20 @@ import { useState } from 'react';
 import { LoadingSpinner } from '../../shared';
 import { IssueList } from '../components/IssueList';
 import { LabelPicker } from '../components/LabelPicker';
-import { useIssues } from '../hooks';
+import { useIssuesInfinite } from '../hooks';
 import { State } from '../interfaces';
 
-export const ListView = () => {
+export const ListViewInfinite = () => {
 
   const [state, setState] = useState<State>(State.All);
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
 
-  const { issuesQuery, nextPage, prevPage, page } = useIssues({
+  const { issuesQuery } = useIssuesInfinite({
     state,
     selectedLabels,
   })
 
-  const issues = issuesQuery.data || [];
+  const issues = issuesQuery.data?.pages.flat() || [];
 
   const onLabelSelected = (label: string) => {
     if (selectedLabels.includes(label)) {
@@ -32,19 +32,20 @@ export const ListView = () => {
           issuesQuery.isLoading
             ? <LoadingSpinner />
             : (
-              <>
+              <div className='flex flex-col justify-center'>
                 <IssueList issues={issues} onStateChange={setState} state={state} />
 
-                <div className='flex justify-between items-center'>
-                  <button onClick={prevPage} className='p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all'>
-                    Anteriores
+                <button
+                disabled={issuesQuery.isFetchingNextPage}
+                  onClick={() => issuesQuery.fetchNextPage()}
+                  className='p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all disabled:bg-gray-500'>
+                    {
+                      issuesQuery.isFetchingNextPage
+                        ? 'Cargando mas'
+                        : 'Cargar mas...'
+                    }
                   </button>
-                  <span>{page}</span>
-                  <button onClick={nextPage} className='p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all'>
-                    Siguientes
-                  </button>
-                </div>
-              </>
+              </div>
             )
         }
       </div>
